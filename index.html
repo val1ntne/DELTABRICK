@@ -5,27 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DELTABRICK: Legends of the Banland</title>
     
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #7c3aed;
-            --accent-gold: #f59e0b;
-            --danger-red: #dc2626;
-            --success-green: #059669;
-            --dark-bg: #0f172a;
-            --darker-bg: #020617;
+            --primary: #3b82f6;
+            --secondary: #8b5cf6;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            
+            --bg-dark: #0f172a;
+            --bg-darker: #020617;
             --card-bg: #1e293b;
-            --border-color: #334155;
+            --border: #334155;
+            
             --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
-            --text-muted: #64748b;
+            --text-muted: #94a3b8;
         }
 
         * {
@@ -36,34 +35,20 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--dark-bg);
+            background: var(--bg-dark);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--darker-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 4px;
-        }
-
-        /* Loading screen */
+        /* Loading Screen */
         .loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--darker-bg);
+            background: var(--bg-darker);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -71,18 +56,14 @@
             transition: opacity 0.5s ease;
         }
 
-        .loading-content {
-            text-align: center;
-        }
-
         .loading-spinner {
-            width: 48px;
-            height: 48px;
-            border: 3px solid var(--border-color);
-            border-top: 3px solid var(--primary-color);
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+            margin-bottom: 1rem;
         }
 
         @keyframes spin {
@@ -90,82 +71,61 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Custom navbar */
-        .custom-navbar {
+        /* Navigation */
+        .navbar {
             background: rgba(15, 23, 42, 0.95) !important;
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
         }
 
         .navbar-brand {
             font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
-            font-size: 1.25rem;
-            color: var(--accent-gold) !important;
+            color: var(--accent) !important;
         }
 
-        .navbar-nav .nav-link {
+        .nav-link {
             color: var(--text-secondary) !important;
             font-weight: 500;
-            margin: 0 0.5rem;
             transition: color 0.3s ease;
-            position: relative;
         }
 
-        .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link.active {
+        .nav-link:hover,
+        .nav-link.active {
             color: var(--text-primary) !important;
         }
 
-        .navbar-nav .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .navbar-nav .nav-link.active::after {
-            width: 24px;
-        }
-
-        /* Hero section */
-        .hero-section {
+        /* Hero Section */
+        .hero {
             min-height: 100vh;
-            background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+            background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
             position: relative;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
         }
 
-        .hero-bg-pattern {
+        .hero::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            opacity: 0.1;
-            background-image: radial-gradient(circle at 25% 25%, var(--primary-color) 0%, transparent 50%),
-                              radial-gradient(circle at 75% 75%, var(--secondary-color) 0%, transparent 50%);
+            background: radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            padding-top: 120px;
-            padding-bottom: 80px;
         }
 
         .hero-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(3rem, 6vw, 5rem);
             font-weight: 700;
-            line-height: 1.1;
-            background: linear-gradient(135deg, var(--accent-gold), var(--primary-color));
+            background: linear-gradient(135deg, var(--accent), var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -175,33 +135,25 @@
         .hero-subtitle {
             font-size: 1.5rem;
             color: var(--text-secondary);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .hero-description {
             font-size: 1.125rem;
             color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 2.5rem;
-        }
-
-        .hero-visual {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 400px;
+            margin-bottom: 2rem;
+            max-width: 600px;
         }
 
         .deltabrick-cube {
             width: 200px;
             height: 200px;
-            background: linear-gradient(135deg, var(--accent-gold), var(--primary-color));
-            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 16px;
             position: relative;
-            transform-style: preserve-3d;
+            margin: 0 auto;
             animation: float 4s ease-in-out infinite;
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
         }
 
         .deltabrick-cube::before {
@@ -213,39 +165,35 @@
             width: 60px;
             height: 60px;
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-            backdrop-filter: blur(10px);
+            border-radius: 8px;
         }
 
         @keyframes float {
-            0%, 100% {
-                transform: translateY(0px) rotateX(0deg) rotateY(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotateX(10deg) rotateY(180deg);
-            }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
         }
 
-        /* Custom buttons */
+        /* Buttons */
         .btn-primary-custom {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none;
-            padding: 12px 32px;
+            padding: 12px 24px;
             font-weight: 600;
             border-radius: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: white;
         }
 
         .btn-primary-custom:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+            color: white;
         }
 
         .btn-outline-custom {
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 10px 32px;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 24px;
             font-weight: 600;
             border-radius: 8px;
             background: transparent;
@@ -253,211 +201,161 @@
         }
 
         .btn-outline-custom:hover {
-            background: var(--primary-color);
+            background: var(--primary);
             color: white;
-            transform: translateY(-2px);
         }
 
-        /* Custom cards */
-        .custom-card {
+        /* Cards */
+        .card-custom {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
             padding: 2rem;
-            height: 100%;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            height: 100%;
+            color: var(--text-primary);
         }
 
-        .custom-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
+        .card-custom:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
-        .custom-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary-color);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        /* Section Titles */
+        .section-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
         }
 
-        .custom-card:hover::before {
-            transform: translateX(0);
-        }
-
-        /* Prophecy section styling */
+        /* Prophecy */
         .prophecy-card {
-            background: linear-gradient(135deg, var(--card-bg), rgba(37, 99, 235, 0.1));
-            border: 1px solid rgba(37, 99, 235, 0.3);
-            border-radius: 20px;
+            background: linear-gradient(135deg, var(--card-bg), rgba(59, 130, 246, 0.05));
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
             padding: 3rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .prophecy-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(37, 99, 235, 0.1), transparent);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .prophecy-content {
-            position: relative;
-            z-index: 1;
         }
 
         .legend-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
             margin: 2rem 0;
         }
 
         .legend-item {
-            background: rgba(124, 58, 237, 0.1);
-            border: 1px solid rgba(124, 58, 237, 0.3);
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
             border-radius: 8px;
             padding: 1rem;
             font-style: italic;
             color: var(--text-secondary);
         }
 
-        /* Character stats */
+        /* Stats */
         .stat-bar {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            height: 8px;
+            border-radius: 4px;
+            height: 6px;
             margin-top: 0.5rem;
+            overflow: hidden;
         }
 
         .stat-fill {
             height: 100%;
-            border-radius: 10px;
+            border-radius: 4px;
             transition: width 1s ease-out;
         }
 
-        .stat-fill-power { background: linear-gradient(90deg, var(--danger-red), #f97316); }
-        .stat-fill-legacy { background: linear-gradient(90deg, var(--accent-gold), #f59e0b); }
-        .stat-fill-strength { background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); }
-        .stat-fill-honor { background: linear-gradient(90deg, var(--success-green), #10b981); }
+        .stat-power { background: linear-gradient(90deg, var(--danger), #f97316); }
+        .stat-legacy { background: linear-gradient(90deg, var(--accent), #fbbf24); }
+        .stat-strength { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+        .stat-honor { background: linear-gradient(90deg, var(--success), #34d399); }
 
-        /* Section styling */
-        .section-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--text-primary);
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: var(--primary-color);
-            border-radius: 2px;
-        }
-
-        /* Feature icons */
+        /* Feature Icons */
         .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border-radius: 16px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
             color: white;
         }
 
-        /* Gallery items */
+        /* Gallery */
         .gallery-item {
             aspect-ratio: 16/10;
             background: var(--card-bg);
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
+            border: 2px dashed var(--border);
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
         }
 
         .gallery-item:hover {
-            border-color: var(--primary-color);
-            transform: scale(1.02);
+            border-color: var(--primary);
         }
 
         .gallery-item i {
-            font-size: 3rem;
+            font-size: 2rem;
             color: var(--text-muted);
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
-        /* CTA section */
+        /* CTA */
         .cta-section {
-            background: linear-gradient(135deg, var(--card-bg), rgba(37, 99, 235, 0.1));
-            border-radius: 20px;
+            background: linear-gradient(135deg, var(--card-bg), rgba(59, 130, 246, 0.05));
+            border-radius: 16px;
             padding: 4rem 2rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Modal styling */
-        .modal-content {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-        }
-
-        .modal-header {
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .modal-body {
-            color: var(--text-primary);
-        }
-
-        .btn-close {
-            filter: invert(1);
         }
 
         /* Footer */
         .footer {
-            background: var(--darker-bg);
-            border-top: 1px solid var(--border-color);
+            background: var(--bg-darker);
+            border-top: 1px solid var(--border);
             padding: 3rem 0 2rem;
             margin-top: 5rem;
+        }
+
+        .footer h6 {
+            color: var(--text-primary);
+        }
+
+        .footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--text-secondary);
+        }
+
+        /* Modal */
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .btn-close {
+            filter: invert(1);
         }
 
         /* Animations */
@@ -472,45 +370,65 @@
             transform: translateY(0);
         }
 
-        /* Responsive adjustments */
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero-content {
-                padding-top: 100px;
+            .hero {
                 text-align: center;
+                padding-top: 100px;
             }
-
-            .hero-visual {
-                height: 300px;
-                margin-top: 2rem;
+            
+            .section-title {
+                font-size: 2rem;
             }
-
+            
             .deltabrick-cube {
                 width: 150px;
                 height: 150px;
             }
+        }
 
-            .prophecy-card {
-                padding: 2rem 1.5rem;
-            }
+        /* Text fixes for better visibility */
+        .text-info {
+            color: var(--primary) !important;
+        }
 
-            .section-title {
-                font-size: 2rem;
-            }
+        .text-warning {
+            color: var(--accent) !important;
+        }
+
+        .text-danger {
+            color: var(--danger) !important;
+        }
+
+        .text-success {
+            color: var(--success) !important;
+        }
+
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        .lead {
+            color: var(--text-secondary) !important;
+        }
+
+        /* Ensure all text is visible */
+        h1, h2, h3, h4, h5, h6, p, span, div {
+            color: inherit;
         }
     </style>
 </head>
-
 <body>
-    <!-- Loading Screen -->
+    <!-- Loading -->
     <div id="loading" class="loading-overlay">
-        <div class="loading-content">
+        <div class="text-center">
             <div class="loading-spinner"></div>
-            <h5 class="text-muted">Loading DELTABRICK...</h5>
+            <h6 class="text-muted">Loading DELTABRICK...</h6>
         </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top custom-navbar">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#home">
                 <i class="bi bi-gem me-2"></i>DELTABRICK
@@ -522,105 +440,86 @@
             
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#prophecy">Prophecy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#characters">Characters</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#features">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#gallery">Gallery</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#prophecy">Prophecy</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#characters">Characters</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="hero-bg-pattern"></div>
+    <!-- Hero -->
+    <section id="home" class="hero">
         <div class="container">
-            <div class="row align-items-center hero-content">
+            <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="hero-title">DELTABRICK</h1>
-                    <p class="hero-subtitle">Legends of the Banland</p>
-                    <p class="hero-description">
-                        Join the legendary OGs on an epic quest to save Roblox. Venture into the mysterious Banland, 
-                        unite with fallen heroes, and discover the ancient DELTABRICK before harmony is lost forever.
-                    </p>
-                    <div class="d-flex flex-wrap gap-3">
-                        <button class="btn btn-primary-custom">
-                            <i class="bi bi-play-fill me-2"></i>Begin the Legend
-                        </button>
-                        <button class="btn btn-outline-custom" data-bs-toggle="modal" data-bs-target="#trailerModal">
-                            <i class="bi bi-film me-2"></i>Watch Trailer
-                        </button>
+                    <div class="hero-content">
+                        <h1 class="hero-title">DELTABRICK</h1>
+                        <p class="hero-subtitle">Legends of the Banland</p>
+                        <p class="hero-description">
+                            Join legendary OGs on an epic quest to save Roblox. Venture into the mysterious Banland, 
+                            unite with fallen heroes, and discover the ancient DELTABRICK.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <button class="btn btn-primary-custom">
+                                <i class="bi bi-play-fill me-2"></i>Begin the Legend
+                            </button>
+                            <button class="btn btn-outline-custom" data-bs-toggle="modal" data-bs-target="#trailerModal">
+                                <i class="bi bi-film me-2"></i>Watch Trailer
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="hero-visual">
-                        <div class="deltabrick-cube"></div>
-                    </div>
+                    <div class="deltabrick-cube"></div>
                 </div>
             </div>
         </div>
     </section>
 
     <div class="container">
-        <!-- Prophecy Section -->
+        <!-- Prophecy -->
         <section id="prophecy" class="py-5 my-5">
             <h2 class="section-title fade-in">The Ancient Prophecy</h2>
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="prophecy-card fade-in">
-                        <div class="prophecy-content">
-                            <h3 class="h2 mb-4 text-warning">The Legend Foretold</h3>
-                            
-                            <p class="lead mb-4">
-                                In the modern times, a <strong class="text-info">LEGEND</strong> was shared among the community.
-                            </p>
-                            
-                            <div class="legend-grid">
-                                <div class="legend-item">It was the legend of Greed</div>
-                                <div class="legend-item">It was the legend of Passion</div>
-                                <div class="legend-item">It was the legend of Players</div>
-                                <div class="legend-item">It was the legend of Developers</div>
-                            </div>
-                            
-                            <h4 class="text-danger my-4 fw-bold">This is the Legend of the DELTABRICK</h4>
-                            
-                            <div class="prophecy-text">
-                                <p class="mb-3">
-                                    For decades, players and developers have lived in harmony, bringing life to Roblox. 
-                                    But if this balance were to break, a terrible calamity would occur. The platform will 
-                                    run with greed and the fanbase will run with hatred. Then, its life pounding, Roblox 
-                                    will draw its final breath.
-                                </p>
-                                
-                                <p class="h5 text-info">
-                                    Only then, shining with Passion, <strong class="text-warning">OGs appear at experiences' edge.</strong> 
-                                    Only they can find the <strong class="text-primary">DELTABRICK</strong> and wish for John to return. 
-                                    Only then will Roblox be great again and harmony will return.
-                                </p>
-                            </div>
+                        <h3 class="h2 mb-4 text-warning">The Legend Foretold</h3>
+                        <p class="lead mb-4">
+                            In the modern times, a <strong class="text-info">LEGEND</strong> was shared among the community.
+                        </p>
+                        
+                        <div class="legend-grid">
+                            <div class="legend-item">The legend of Greed</div>
+                            <div class="legend-item">The legend of Passion</div>
+                            <div class="legend-item">The legend of Players</div>
+                            <div class="legend-item">The legend of Developers</div>
                         </div>
+                        
+                        <h4 class="text-danger my-4">This is the Legend of the DELTABRICK</h4>
+                        
+                        <p class="mb-3">
+                            For decades, players and developers lived in harmony. But if this balance breaks, 
+                            a terrible calamity will occur. The platform will run with greed and hatred.
+                        </p>
+                        
+                        <p class="h5 text-info">
+                            Only then, shining with Passion, <strong class="text-warning">OGs appear at experiences' edge.</strong> 
+                            Only they can find the <strong class="text-primary">DELTABRICK</strong> and restore harmony.
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Characters Section -->
+        <!-- Characters -->
         <section id="characters" class="py-5 my-5">
             <h2 class="section-title fade-in">Legendary Characters</h2>
             <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="custom-card fade-in text-center">
+                <div class="col-lg-4">
+                    <div class="card-custom fade-in text-center">
                         <div class="feature-icon">
                             <i class="bi bi-person-badge"></i>
                         </div>
@@ -629,28 +528,26 @@
                         
                         <div class="mb-3">
                             <div class="d-flex justify-content-between mb-1">
-                                <span class="small">Power</span>
-                                <span class="small">95%</span>
+                                <span>Power</span><span>95%</span>
                             </div>
                             <div class="stat-bar">
-                                <div class="stat-fill stat-fill-power" style="width: 95%"></div>
+                                <div class="stat-fill stat-power" style="width: 95%"></div>
                             </div>
                         </div>
                         
                         <div class="mb-3">
                             <div class="d-flex justify-content-between mb-1">
-                                <span class="small">Legacy</span>
-                                <span class="small">100%</span>
+                                <span>Legacy</span><span>100%</span>
                             </div>
                             <div class="stat-bar">
-                                <div class="stat-fill stat-fill-legacy" style="width: 100%"></div>
+                                <div class="stat-fill stat-legacy" style="width: 100%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
-                    <div class="custom-card fade-in text-center">
+                <div class="col-lg-4">
+                    <div class="card-custom fade-in text-center">
                         <div class="feature-icon">
                             <i class="bi bi-shield-check"></i>
                         </div>
@@ -659,28 +556,26 @@
                         
                         <div class="mb-3">
                             <div class="d-flex justify-content-between mb-1">
-                                <span class="small">Strength</span>
-                                <span class="small">90%</span>
+                                <span>Strength</span><span>90%</span>
                             </div>
                             <div class="stat-bar">
-                                <div class="stat-fill stat-fill-strength" style="width: 90%"></div>
+                                <div class="stat-fill stat-strength" style="width: 90%"></div>
                             </div>
                         </div>
                         
                         <div class="mb-3">
                             <div class="d-flex justify-content-between mb-1">
-                                <span class="small">Honor</span>
-                                <span class="small">85%</span>
+                                <span>Honor</span><span>85%</span>
                             </div>
                             <div class="stat-bar">
-                                <div class="stat-fill stat-fill-honor" style="width: 85%"></div>
+                                <div class="stat-fill stat-honor" style="width: 85%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6 mx-auto">
-                    <div class="custom-card fade-in text-center">
+                <div class="col-lg-4">
+                    <div class="card-custom fade-in text-center">
                         <div class="feature-icon">
                             <i class="bi bi-crown"></i>
                         </div>
@@ -689,21 +584,19 @@
                         
                         <div class="mb-3">
                             <div class="d-flex justify-content-between mb-1">
-                                <span class="small">Nostalgia</span>
-                                <span class="small">100%</span>
+                                <span>Nostalgia</span><span>100%</span>
                             </div>
                             <div class="stat-bar">
-                                <div class="stat-fill stat-fill-legacy" style="width: 100%"></div>
+                                <div class="stat-fill stat-legacy" style="width: 100%"></div>
                             </div>
                         </div>
                         
                         <div class="mb-3">
                             <div class="d-flex justify-content-between mb-1">
-                                <span class="small">Hope</span>
-                                <span class="small">88%</span>
+                                <span>Hope</span><span>88%</span>
                             </div>
                             <div class="stat-bar">
-                                <div class="stat-fill stat-fill-honor" style="width: 88%"></div>
+                                <div class="stat-fill stat-honor" style="width: 88%"></div>
                             </div>
                         </div>
                     </div>
@@ -711,65 +604,65 @@
             </div>
         </section>
 
-        <!-- Features Section -->
+        <!-- Features -->
         <section id="features" class="py-5 my-5">
             <h2 class="section-title fade-in">Epic Adventures Await</h2>
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6">
-                    <div class="custom-card fade-in text-center">
+                    <div class="card-custom fade-in text-center">
                         <div class="feature-icon">
                             <i class="bi bi-people-fill"></i>
                         </div>
                         <h4 class="mb-3">Unite with Legends</h4>
                         <p class="text-muted">
-                            Team up with banned heroes like coolkidd and John Toe. Each legendary player brings 
-                            unique abilities and unforgotten memories of Roblox's golden era.
+                            Team up with banned heroes like coolkidd and John Doe. Each brings unique abilities 
+                            and memories of Roblox's golden era.
                         </p>
                     </div>
                 </div>
                 
                 <div class="col-lg-3 col-md-6">
-                    <div class="custom-card fade-in text-center">
+                    <div class="card-custom fade-in text-center">
                         <div class="feature-icon">
                             <i class="bi bi-map"></i>
                         </div>
                         <h4 class="mb-3">Explore the Banland</h4>
                         <p class="text-muted">
-                            Venture into the mysterious Banland realm, where exiled players have built their own 
-                            world. Navigate treacherous dungeons and ancient ruins.
+                            Venture into the mysterious Banland realm, where exiled players built their own world. 
+                            Navigate treacherous dungeons and ancient ruins.
                         </p>
                     </div>
                 </div>
                 
                 <div class="col-lg-3 col-md-6">
-                    <div class="custom-card fade-in text-center">
+                    <div class="card-custom fade-in text-center">
                         <div class="feature-icon">
                             <i class="bi bi-gem"></i>
                         </div>
                         <h4 class="mb-3">Find the DELTABRICK</h4>
                         <p class="text-muted">
-                            Discover the legendary artifact that holds the power to restore Roblox's balance. 
+                            Discover the legendary artifact that holds power to restore Roblox's balance. 
                             But beware - others seek its power for darker purposes.
                         </p>
                     </div>
                 </div>
                 
                 <div class="col-lg-3 col-md-6">
-                    <div class="custom-card fade-in text-center">
+                    <div class="card-custom fade-in text-center">
                         <div class="feature-icon">
                             <i class="bi bi-controller"></i>
                         </div>
                         <h4 class="mb-3">OG Experience</h4>
                         <p class="text-muted">
-                            Relive the golden age of Roblox gaming with classic mechanics, nostalgic references, 
-                            and the community spirit that made the platform legendary.
+                            Relive the golden age with classic mechanics, nostalgic references, 
+                            and the community spirit that made Roblox legendary.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Gallery Section -->
+        <!-- Gallery -->
         <section id="gallery" class="py-5 my-5">
             <h2 class="section-title fade-in">Game Gallery</h2>
             <div class="row g-3">
@@ -800,12 +693,12 @@
             </div>
         </section>
 
-        <!-- CTA Section -->
+        <!-- CTA -->
         <section class="py-5 my-5">
             <div class="cta-section fade-in">
-                <h2 class="display-4 fw-bold mb-4">The Prophecy Awaits</h2>
+                <h2 class="display-5 fw-bold mb-4">The Prophecy Awaits</h2>
                 <p class="lead mb-4">
-                    Will you answer the call and restore balance to Roblox? The fate of millions of players 
+                    Will you answer the call and restore balance to Roblox? The fate of millions 
                     rests in your hands. Begin your legendary journey today.
                 </p>
                 <div class="d-flex flex-wrap gap-3 justify-content-center">
@@ -831,80 +724,63 @@
                     <p class="text-muted">
                         Restoring the golden age of Roblox through legendary storytelling and immersive gameplay.
                     </p>
-                    <div class="d-flex gap-3">
-                        <a href="#" class="text-muted">
-                            <i class="bi bi-discord"></i>
-                        </a>
-                        <a href="#" class="text-muted">
-                            <i class="bi bi-twitter"></i>
-                        </a>
-                        <a href="#" class="text-muted">
-                            <i class="bi bi-youtube"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
-                    <h6 class="text-white mb-3">Game</h6>
+                    <h6 class="mb-3">Game</h6>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-muted text-decoration-none">Download</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">System Requirements</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Updates</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Support</a></li>
+                        <li><a href="#">Download</a></li>
+                        <li><a href="#">System Requirements</a></li>
+                        <li><a href="#">Updates</a></li>
+                        <li><a href="#">Support</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
-                    <h6 class="text-white mb-3">Community</h6>
+                    <h6 class="mb-3">Community</h6>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-muted text-decoration-none">Discord</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Reddit</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Forums</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Wiki</a></li>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">Reddit</a></li>
+                        <li><a href="#">Forums</a></li>
+                        <li><a href="#">Wiki</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
-                    <h6 class="text-white mb-3">Company</h6>
+                    <h6 class="mb-3">Company</h6>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-muted text-decoration-none">About</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Careers</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Press</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Contact</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Contact</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
-                    <h6 class="text-white mb-3">Legal</h6>
+                    <h6 class="mb-3">Legal</h6>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-muted text-decoration-none">Privacy Policy</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Terms of Service</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">EULA</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Cookies</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">EULA</a></li>
                     </ul>
                 </div>
             </div>
-            <hr class="my-4" style="border-color: var(--border-color);">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="text-muted mb-0">
-                        &copy; 2025 DELTABRICK: Legends of the Banland. All rights reserved.
-                    </p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="text-muted mb-0">
-                        Made with <i class="bi bi-heart-fill text-danger"></i> for the Roblox community
-                    </p>
-                </div>
+            <hr class="my-4" style="border-color: var(--border);">
+            <div class="text-center">
+                <p class="text-muted mb-0">
+                    &copy; 2025 DELTABRICK: Legends of the Banland. Made with 
+                    <i class="bi bi-heart-fill text-danger"></i> for the Roblox community.
+                    <br/>We are not affiliated with ROBLOX, this is only a fan-project.
+                </p>
             </div>
         </div>
     </footer>
 
-    <!-- Trailer Modal -->
-    <div class="modal fade" id="trailerModal" tabindex="-1" aria-labelledby="trailerModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+    <!-- Modal -->
+    <div class="modal fade" id="trailerModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title text-warning" id="trailerModalLabel">
+                <div class="modal-header">
+                    <h5 class="modal-title text-warning">
                         <i class="bi bi-film me-2"></i>Game Trailer
                     </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center py-5">
                     <div class="mb-4">
@@ -915,251 +791,100 @@
                         We're putting the finishing touches on our epic gameplay trailer. 
                         Stay tuned for legendary action and adventure!
                     </p>
-                    <div class="d-flex gap-3 justify-content-center">
-                        <button class="btn btn-primary-custom">
-                            <i class="bi bi-bell me-2"></i>Notify Me
-                        </button>
-                        <button class="btn btn-outline-custom" data-bs-dismiss="modal">
-                            <i class="bi bi-x-circle me-2"></i>Close
-                        </button>
-                    </div>
+                    <button class="btn btn-primary-custom" data-bs-dismiss="modal">
+                        <i class="bi bi-bell me-2"></i>Notify Me
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Modern, clean JavaScript implementation
         class DeltabrickSite {
             constructor() {
-                this.initializeComponents();
-                this.setupEventListeners();
-                this.setupScrollAnimations();
-                this.handlePageLoad();
+                this.init();
             }
 
-            initializeComponents() {
-                this.navbar = document.querySelector('.navbar');
-                this.navLinks = document.querySelectorAll('.nav-link');
-                this.sections = document.querySelectorAll('section[id]');
-                this.fadeElements = document.querySelectorAll('.fade-in');
-                this.loadingOverlay = document.getElementById('loading');
+            init() {
+                this.setupScrollSpy();
+                this.setupAnimations();
+                this.hideLoading();
             }
 
-            setupEventListeners() {
-                // Smooth scrolling for navigation links
-                this.navLinks.forEach(link => {
-                    link.addEventListener('click', this.handleNavClick.bind(this));
-                });
+            setupScrollSpy() {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('.nav-link');
 
-                // Scroll spy for active navigation
-                window.addEventListener('scroll', this.handleScroll.bind(this));
-
-                // Wishlist functionality
-                const wishlistBtn = document.querySelector('.btn-outline-custom.btn-lg');
-                if (wishlistBtn) {
-                    wishlistBtn.addEventListener('click', this.handleWishlist.bind(this));
-                }
-
-                // Play button functionality
-                const playBtn = document.querySelector('.btn-primary-custom.btn-lg');
-                if (playBtn) {
-                    playBtn.addEventListener('click', this.handlePlayGame.bind(this));
-                }
-            }
-
-            handleNavClick(event) {
-                event.preventDefault();
-                const targetId = event.target.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                if (targetSection) {
-                    const offsetTop = targetSection.offsetTop - 80;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
+                window.addEventListener('scroll', () => {
+                    let current = '';
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop - 100;
+                        if (pageYOffset >= sectionTop) {
+                            current = section.getAttribute('id');
+                        }
                     });
-                }
-            }
 
-            handleScroll() {
-                // Update active navigation
-                let current = '';
-                this.sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (window.pageYOffset >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
                 });
 
-                this.navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
+                // Smooth scroll
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const target = document.querySelector(link.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
                 });
-
-                // Navbar background opacity based on scroll
-                const scrolled = window.pageYOffset;
-                const opacity = Math.min(scrolled / 100, 0.95);
-                this.navbar.style.backgroundColor = `rgba(15, 23, 42, ${opacity})`;
             }
 
-            setupScrollAnimations() {
-                const observerOptions = {
-                    threshold: 0.1,
-                    rootMargin: '0px 0px -50px 0px'
-                };
-
+            setupAnimations() {
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('visible');
                             
-                            // Animate stats bars if they're character cards
+                            // Animate stat bars
                             const statFills = entry.target.querySelectorAll('.stat-fill');
-                            if (statFills.length > 0) {
-                                setTimeout(() => {
-                                    statFills.forEach(fill => {
-                                        const width = fill.style.width;
-                                        fill.style.width = '0%';
-                                        setTimeout(() => {
-                                            fill.style.width = width;
-                                        }, 100);
-                                    });
-                                }, 200);
-                            }
+                            statFills.forEach(fill => {
+                                const width = fill.style.width;
+                                fill.style.width = '0%';
+                                setTimeout(() => fill.style.width = width, 300);
+                            });
                         }
                     });
-                }, observerOptions);
+                }, { threshold: 0.1 });
 
-                this.fadeElements.forEach(el => {
+                document.querySelectorAll('.fade-in').forEach(el => {
                     observer.observe(el);
                 });
             }
 
-            handlePageLoad() {
-                // Hide loading screen after content loads
+            hideLoading() {
                 window.addEventListener('load', () => {
                     setTimeout(() => {
-                        this.loadingOverlay.style.opacity = '0';
-                        setTimeout(() => {
-                            this.loadingOverlay.style.display = 'none';
-                        }, 500);
-                    }, 1500);
+                        const loading = document.getElementById('loading');
+                        loading.style.opacity = '0';
+                        setTimeout(() => loading.style.display = 'none', 500);
+                    }, 1000);
                 });
-            }
-
-            handleWishlist() {
-                const button = event.target.closest('button');
-                const originalHTML = button.innerHTML;
-                
-                button.innerHTML = '<i class="bi bi-check-circle me-2"></i>Added to Wishlist!';
-                button.classList.remove('btn-outline-custom');
-                button.classList.add('btn-success');
-                
-                setTimeout(() => {
-                    button.innerHTML = originalHTML;
-                    button.classList.remove('btn-success');
-                    button.classList.add('btn-outline-custom');
-                }, 2500);
-                
-                // Show toast notification
-                this.showToast('Added to wishlist! We\'ll notify you when the game launches.', 'success');
-            }
-
-            handlePlayGame() {
-                this.showToast('Game is still in development. Join our Discord for beta access!', 'info');
-            }
-
-            showToast(message, type = 'info') {
-                // Create toast container if it doesn't exist
-                let toastContainer = document.querySelector('.toast-container');
-                if (!toastContainer) {
-                    toastContainer = document.createElement('div');
-                    toastContainer.className = 'toast-container position-fixed top-0 end-0 p-3';
-                    toastContainer.style.zIndex = '9999';
-                    document.body.appendChild(toastContainer);
-                }
-
-                // Create toast element
-                const toastElement = document.createElement('div');
-                toastElement.className = `toast align-items-center text-bg-${type} border-0`;
-                toastElement.setAttribute('role', 'alert');
-                toastElement.innerHTML = `
-                    <div class="d-flex">
-                        <div class="toast-body">${message}</div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                    </div>
-                `;
-
-                toastContainer.appendChild(toastElement);
-
-                // Initialize and show toast
-                const toast = new bootstrap.Toast(toastElement);
-                toast.show();
-
-                // Remove toast element after it's hidden
-                toastElement.addEventListener('hidden.bs.toast', () => {
-                    toastElement.remove();
-                });
-            }
-
-            // Easter egg functionality
-            initializeEasterEggs() {
-                let konamiSequence = [];
-                const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
-
-                document.addEventListener('keydown', (event) => {
-                    konamiSequence.push(event.code);
-                    if (konamiSequence.length > konamiCode.length) {
-                        konamiSequence.shift();
-                    }
-
-                    if (JSON.stringify(konamiSequence) === JSON.stringify(konamiCode)) {
-                        this.activateSecretMode();
-                        konamiSequence = [];
-                    }
-                });
-            }
-
-            activateSecretMode() {
-                document.body.style.filter = 'hue-rotate(180deg) saturate(1.5)';
-                this.showToast('🎮 Secret OG mode activated! The legends smile upon you.', 'warning');
-                
-                setTimeout(() => {
-                    document.body.style.filter = 'none';
-                }, 5000);
             }
         }
 
-        // Initialize the site when DOM is ready
+        // Initialize when DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
-            const site = new DeltabrickSite();
-            site.initializeEasterEggs();
+            new DeltabrickSite();
         });
-
-        // Performance optimization: Throttle scroll events
-        function throttle(func, limit) {
-            let inThrottle;
-            return function() {
-                const args = arguments;
-                const context = this;
-                if (!inThrottle) {
-                    func.apply(context, args);
-                    inThrottle = true;
-                    setTimeout(() => inThrottle = false, limit);
-                }
-            }
-        }
-
-        // Apply throttling to scroll events
-        window.addEventListener('scroll', throttle(() => {
-            // Additional scroll-based animations can be added here
-        }, 16)); // ~60fps
     </script>
 </body>
 </html>
